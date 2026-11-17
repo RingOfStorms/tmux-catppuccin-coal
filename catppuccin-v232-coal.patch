@@ -1,0 +1,52 @@
+--- a/flakes/common/hm_modules/tmux/default.nix
++++ b/flakes/common/hm_modules/tmux/default.nix
+@@ -57,33 +57,38 @@
+       # One detached namer per server (it exits with the server); -b + setsid
+       # keep tmux startup from ever waiting on it.
+       run-shell -b 'command -v tmux-ai-names >/dev/null && { setsid tmux-ai-names </dev/null >/dev/null 2>&1 & }; true'
++
++      # Status line composition. v2.3.2 no longer builds status-left/right
++      # from @catppuccin_status_modules_*, so compose it explicitly here.
++      # This block is emitted after plugin run-shells, so the module
++      # variables exist by the time it runs.
++      set -g status-left-length 100
++      set -g status-right-length 100
++      set -g status-left "#{E:@catppuccin_status_session}"
++      set -g status-right "#{E:@catppuccin_status_directory}#{E:@catppuccin_status_application}#{E:@catppuccin_status_date_time}"
+     '';
+ 
+     plugins = with pkgs.tmuxPlugins; [
+       {
+         plugin = catppuccin.overrideAttrs (_: {
++          version = "2.3.2+coal.204e047";
+           src = pkgs.fetchgit {
+-            url = "https://github.com/RingOfStorms/tmux-catppuccin-coal.git";
+-            rev = "d078123cd81c0dbb3f780e8575a9d38fe2023e1b";
+-            sha256 = "sha256-qPY/dovDyut5WoUkZ26F2w3fJVmw4gcC+6l2ugsA65Y=";
++            url = "https://git.joshuabell.xyz/ringofstorms/tmux-catppuccin-coal.git";
++            rev = "204e047e2675cdc86997e68ae8d5291dafe066b7";
++            sha256 = "sha256-LaoTM6WKkhCdz81Xh104p5uRRaOreurCZ+aBUMfTVUI=";
+           };
+         });
+         extraConfig = ''
+-          set -g @catppuccin_flavor 'mocha'
++          set -g @catppuccin_flavor 'coal'
+           set -g @catppuccin_window_left_separator ""
+           set -g @catppuccin_window_right_separator " "
+           set -g @catppuccin_window_middle_separator " █"
+           set -g @catppuccin_window_number_position "right"
+-          set -g @catppuccin_window_default_fill "number"
+-          set -g @catppuccin_window_default_text "#W"
+-          set -g @catppuccin_window_current_fill "number"
++          set -g @catppuccin_window_status_style "custom"  # required, else basic/rounded/slanted overwrite the separators above
++          set -g @catppuccin_window_text "#W"
+           set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
+-          set -g @catppuccin_status_modules_right "directory application date_time"
+-          set -g @catppuccin_status_modules_left "session"
+           set -g @catppuccin_status_left_separator  " "
+           set -g @catppuccin_status_right_separator " "
+-          set -g @catppuccin_status_right_separator_inverse "no"
+-          set -g @catppuccin_status_fill "icon"
+           set -g @catppuccin_status_connect_separator "no"
+           set -g @catppuccin_directory_text "#{b:pane_current_path}"
+           set -g @catppuccin_date_time_text "%H:%M"
