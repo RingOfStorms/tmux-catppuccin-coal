@@ -72,7 +72,7 @@ This method is recommended as TPM has some issues with name conflicts.
 
    ```bash
    mkdir -p ~/.config/tmux/plugins/catppuccin
-   git clone https://github.com/ringofstorms/tmux-catppuccin-coal.git ~/.config/tmux/plugins/catppuccin/tmux
+   git clone https://git.joshuabell.xyz/ringofstorms/tmux-catppuccin-coal.git ~/.config/tmux/plugins/catppuccin/tmux
    ```
 
 1. Add the following line to your `tmux.conf` file:
@@ -87,14 +87,18 @@ Check out what to do next in the "[Getting Started Guide](./docs/tutorials/01-ge
 <!-- x-release-please-start-version -->
 
 1.  Install [TPM](https://github.com/tmux-plugins/tpm)
-1.  Add the Catppuccin plugin:
+1.  Add the Catppuccin plugin. TPM's `owner/repo` shorthand resolves to GitHub,
+    so this fork has to be given as a full clone URL:
 
     ```bash
-    set -g @plugin 'ringofstorms/tmux-catppuccin-coal' # this fork, includes the "coal" flavor
+    set -g @plugin 'https://git.joshuabell.xyz/ringofstorms/tmux-catppuccin-coal.git' # this fork, includes the "coal" flavor
     # ...alongside
     set -g @plugin 'tmux-plugins/tpm'
     ```
 
+    Once TPM has cloned it, load it with the directory name TPM derives from the
+    repository basename:
+    `run ~/.tmux/plugins/tmux-catppuccin-coal/catppuccin.tmux`.
 1.  (Optional) Set your preferred flavor, it defaults to `"mocha"`:
 
     ```bash
@@ -202,7 +206,7 @@ set -g @catppuccin_window_status_style "rounded"
 
 # Load catppuccin
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
-# For TPM, instead use `run ~/.tmux/plugins/tmux/catppuccin.tmux`
+# For TPM, instead use `run ~/.tmux/plugins/tmux-catppuccin-coal/catppuccin.tmux`
 
 # Make the status line pretty and add some modules
 set -g status-right-length 100
