@@ -96,9 +96,7 @@ Check out what to do next in the "[Getting Started Guide](./docs/tutorials/01-ge
     set -g @plugin 'tmux-plugins/tpm'
     ```
 
-    Once TPM has cloned it, load it with the directory name TPM derives from the
-    repository basename:
-    `run ~/.tmux/plugins/tmux-catppuccin-coal/catppuccin.tmux`.
+    TPM loads the plugin itself, so no `run` line is needed for it.
 1.  (Optional) Set your preferred flavor, it defaults to `"mocha"`:
 
     ```bash
@@ -206,7 +204,7 @@ set -g @catppuccin_window_status_style "rounded"
 
 # Load catppuccin
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
-# For TPM, instead use `run ~/.tmux/plugins/tmux-catppuccin-coal/catppuccin.tmux`
+# With TPM, drop the `run` line above; TPM loads the plugin itself.
 
 # Make the status line pretty and add some modules
 set -g status-right-length 100
