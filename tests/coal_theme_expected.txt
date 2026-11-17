@@ -1,0 +1,11 @@
+@thm_bg #262626
+
+@thm_fg #e0e0e0
+
+@thm_surface_0 #3b3b3b
+
+@thm_mantle #1f1f1f
+
+@thm_mauve #cba6f7
+
+status-style bg=#1f1f1f,fg=#e0e0e0
